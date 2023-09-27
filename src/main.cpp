@@ -37,7 +37,7 @@
 //************************************************************************
 
 #include<examinimd.h>
-
+#include <hpctoolkit.h>
 // ExaMiniMD can be used as a library
 // This main file is simply a driver
 
@@ -46,7 +46,7 @@
 #endif
 
 int main(int argc, char* argv[]) {
-
+   hpctoolkit_sampling_stop();
    #ifdef EXAMINIMD_ENABLE_MPI
    MPI_Init(&argc,&argv);
    #endif
@@ -55,9 +55,9 @@ int main(int argc, char* argv[]) {
 
    ExaMiniMD examinimd;
    examinimd.init(argc,argv);
-  
+   hpctoolkit_sampling_start();
    examinimd.run(examinimd.input->nsteps);
-
+   hpctoolkit_sampling_stop();
    //   examinimd.check_correctness();
 
    examinimd.print_performance();
